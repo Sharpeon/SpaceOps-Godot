@@ -12,7 +12,7 @@ func init(move_spd, dmg, group):
 		self.move_speed = move_spd
 	if dmg:
 		self.damage = dmg
-	if my_group:
+	if not group == null and not group == "":
 		self.my_group = group
 
 func _physics_process(delta):

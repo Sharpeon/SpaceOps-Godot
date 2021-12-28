@@ -4,6 +4,7 @@
 extends KinematicBody2D
 
 export (int, 1, 1000) var max_hp = 5
+export (int, 1, 1000) var move_speed = 450
 
 var velocity: Vector2 = Vector2.ZERO
 var bullet_scene = preload("res://Bullets/Bullet.tscn")

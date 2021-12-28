@@ -5,7 +5,9 @@
 [ext_resource path="res://Actors/Enemy.gd" type="Script" id=3]
 
 [node name="Enemy" groups=["Enemy"] instance=ExtResource( 1 )]
+collision_layer = 2
 script = ExtResource( 3 )
+move_speed = 200
 
 [node name="Sprite" parent="." index="0"]
 texture = ExtResource( 2 )
@@ -14,4 +16,9 @@ texture = ExtResource( 2 )
 
 [node name="SpawningTween" type="Tween" parent="." index="4"]
 
+[node name="MoveDownTimer" type="Timer" parent="." index="5"]
+process_mode = 0
+wait_time = 0.5
+
 [connection signal="timeout" from="ShootTimer" to="." method="_on_ShootTimer_timeout"]
+[connection signal="timeout" from="MoveDownTimer" to="." method="_on_MoveDownTimer_timeout"]

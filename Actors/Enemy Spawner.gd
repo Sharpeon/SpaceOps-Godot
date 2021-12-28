@@ -3,7 +3,7 @@ extends Node2D
 const STATE = preload("res://Actors/EnemyState.gd").EnemyState
 const ENEMY_SCENE = preload("res://Actors/Enemy.tscn")
 
-export (int) var enemy_per_line = 6
+export (int) var enemy_per_line = 7
 export (Vector2) var enemy_offset = Vector2.ZERO
 
 var enemies = []
@@ -44,17 +44,19 @@ func _on_SpawnTimer_timeout():
 	# Create an enemy when the timer times out.
 	var enemy = ENEMY_SCENE.instance()
 	enemy.position = Vector2(enemy_offset.x, enemy_offset.y)
-	enemy.init(get_enemy_x_pos_after_spawning())
+	enemy.init(get_enemy_x_pos_after_spawning(), enemy_offset)
 	# TODO: Put the enemy's position offscren, actually. think thats bettter
 	
 	enemies.append(enemy)
 	get_tree().get_root().add_child(enemy)
 	
-	# Stop if enough enemies and switches all enemies states to BASIC
+	var spawning_tween = enemy.get_node("SpawningTween")
+	spawning_tween.connect("tween_completed", self, "_on_spawning_finished")
+	
+	# Stop if enough enemies 
 	if len(enemies) >= enemy_per_line:
 		spawn_timer.stop()
 		
-		# TODO: Figure out a way to wait for the last enemy to tween before 
-		# switching states
-		for e in enemies:
-			e.set_state(STATE.BASIC)
+
+func _on_spawning_finished(obj, key):
+	obj.set_state(STATE.BASIC)

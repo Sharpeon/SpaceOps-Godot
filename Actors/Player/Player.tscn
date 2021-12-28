@@ -12,3 +12,7 @@ texture = ExtResource( 3 )
 
 [node name="ShootingPoint" parent="." index="2"]
 position = Vector2( 0, -40 )
+
+[node name="ChargedShotTimer" type="Timer" parent="." index="3"]
+
+[connection signal="timeout" from="ChargedShotTimer" to="." method="_on_ChargedShotTimer_timeout"]
